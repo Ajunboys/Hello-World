@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="texxt/html" charset="utf-8"/>
+<title>jQuery Touch Example</title>
+<style type="text/css">
+<!--
+#touch_area{height: 80px; width: 100%; background: black;}
+span{color:red;font-weight: bold;}
+-->
+</style>
+<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.mobile-1.2.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#touch_area").bind("tap",function(e){
+		
+	});
+	
+});
+</script>
+</head>
+
+<body>
+<div>黑色区域为手势左右区域:</div>
+<div id="touch_area">
+
+</div>
+<div data-role="page">
+<div data-role="header"></div>
+<div data-role="content">
+touchstart:<span id="touchstart-hand"></span>-手指,codeNumber-<span id="touchstart-code"></span>.<br/>
+touchend:<span id="touchend-hand"></span>-手指,codeNumber-<span id="touchend-code"></span>.<br/>
+touchmove:<span id="touchmove-hand"></span>-手指,codeNumber-<span id="touchmove-code"></span>,
+<span id="touchmove-xy"></span>.<br/>
+</div>
+<div data-role="footer"></div>
+</div>
+</body>
+</html>

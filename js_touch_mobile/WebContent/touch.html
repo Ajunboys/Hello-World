@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" content="text/html"/>
+<meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
+<title>javascript手势事件</title>
+<style type="text/css">
+<!--
+div{border: 1px solid black; margin: 3px 3px; padding: 2px 2px; min-height: 40px; width: 50%; }
+#touch_area{background: black;height: 120px; width: 100%; }
+#keyboard{background: black; width: 100%; margin: 4px;}
+#keyboard span{margin: 2px 2px; padding: 2px 2px; font-weight: bold; color: white; border: 1px solid gray; }
+#menu,#keyboard{display: none;}
+body {
+    padding: 0;
+    margin: 0;
+}
+ 
+ 
+.blue {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: blue;
+    border-radius: 200px;
+}
+ 
+.purple {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: purple;
+    border-radius: 200px;
+}
+ 
+.red {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: red;
+    border-radius: 200px;
+}
+-->
+</style>
+</head>
+<body>
+<div id="menu" >
+<h3>菜单</h3>
+<h5>----+购物车</h5>
+<h5>----+帮助?</h5>
+<h5>----+退出X</h5>
+</div>
+<div id="keyboard" >
+<p>
+<span>Q</span>
+<span>W</span>
+<span>E</span>
+<span>R</span>
+<span>T</span>
+<span>Y</span>
+</p>
+<p>
+<span>A</span>
+<span>S</span>
+<span>D</span>
+<span>F</span>
+<span>G</span>
+<span>H</span>
+</p>
+<p>
+<span>Z</span>
+<span>X</span>
+<span>C</span>
+<span>V</span>
+<span>B</span>
+<span>N</span>
+</p>
+</div>
+<p>黑色区域为手势左右区域:</p>
+<div id="touch_area">
+
+</div>
+<div id="touch_document_area">
+
+</div>
+
+<div id="touchstart" >
+
+</div>
+<div id="touchend">
+
+</div>
+<div id="touchmove" >
+
+</div>
+
+<script type="text/javascript">
+document.addEventListener("touchstart", function(event){
+	var hands = event.touches.length;
+    var contents = "";
+    contents += "document-touchstart:"+hands +"," + hands +" 个手指.";
+       
+    if(hands == 1 || hands == "1"){
+        contents += "";
+     }else if(hands == 2 || hands == "2"){
+         //toggle 键盘
+         var keyboard = document.getElementById("keyboard");
+         var old = keyboard.style.display;
+         keyboard.style.display = (old=="none")?"block":"none";
+     }else if(hands ==3 || hands == "3"){
+         //toggle 菜单
+         var menu = document.getElementById("menu");
+         var old = menu.style.display;
+         menu.style.display = (old=="none")?"block":"none";
+     }else{
+         contents += "Sorry!这不是手,是爪子...";
+     }
+     
+   document.getElementById("touch_document_area").innerHTML = contents;
+}, false);
+document.getElementById("touch_area").addEventListener('touchstart', 
+    function(event) {    
+	   var hands = event.touches.length;
+	   var contents = "";
+	   contents += "touchstart:"+hands +"," + hands +" 个手指.";
+	      
+	   if(hands == 1 || hands == "1"){
+		   contents += "";
+	    }
+      document.getElementById("touchstart").innerHTML = contents;
+    }
+, false);
+document.getElementById("touch_area").addEventListener('touchmove', function(e) {    
+    e.preventDefault(); // Stop any annoying scrolling.
+    
+    var touch = e.touches[0]; // 获得用户最终触摸屏幕的手指数.
+    document.getElementById("touchmove").innerHTML = "Touch x:" + touch.pageX + ", y:" + touch.pageY;
+         
+    var posY = touch.pageY - 25; // Get the Y position (-25 to center)
+    var posX = touch.pageX - 25; // Get the X position (-25 to center)
+     
+    if(e.touches.length == 1) { // 如果是一个手指触摸屏
+     
+        //根据当前手指的坐标位置创建div
+        // -----------------------------------------
+         
+        var blue = document.createElement('div');
+        blue.setAttribute('class', 'blue');
+         
+        blue.style.top = posY+'px';
+        blue.style.left = posX+'px';
+         
+        document.body.appendChild(blue); 
+         
+    }
+     
+    if(e.touches.length == 2) { // 如果是两个手指触摸屏
+     
+        var purple = document.createElement('div');
+        purple.setAttribute('class', 'purple');
+         
+        purple.style.top = posY+'px';
+        purple.style.left = posX+'px';
+         
+        document.body.appendChild(purple);
+     
+    }
+     
+    if(e.touches.length == 3) { // 如果是三个手指触摸屏
+     
+        var red = document.createElement('div');
+        red.setAttribute('class', 'red');
+         
+        red.style.top = posY+'px';
+        red.style.left = posX+'px';
+         
+        document.body.appendChild(red);
+     
+    }
+    
+    }, false);
+document.getElementById("touch_area").addEventListener('touchend', 
+        function(event) {    
+	var hands = event.touches.length;
+    var contents = "";
+     //if(hands == 1 || hands == "1"){
+         contents += "touchend:"+event.touches.length +"," + hands +" 个手指.";
+     //}
+    // alert("touchstart:"+event.touches.length);
+       document.getElementById("touchend").innerHTML = contents;
+        }
+    , false);
+    
+/*
+ document.addEventListener('touchend', 
+        function(event) {    
+           alert("touchend:"+event.touches.length);
+        }
+    , false); 
+ */
+</script>
+
+</body>
+</html>
